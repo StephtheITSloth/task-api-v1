@@ -44,7 +44,7 @@ const updateSingleTask = async (req,res) => {
             _id: taskID}, req.body, {new:true, runValidators: true})
 
         if(!task){
-            res.status(404).json({msg: `No task with id: ${taskID}`})
+            return res.status(404).json({msg: `No task with id: ${taskID}`})
         }
 
         res.status(200).json({task})
@@ -59,7 +59,7 @@ const deleteSingleTask = async (req,res) => {
         const task = await Task.findOneAndDelete({_id: taskID})
 
         if(!task){
-            res.status(404).json({ msg: `No task with id: $(taskID)`})
+            return res.status(404).json({ msg: `No task with id: $(taskID)`})
         }
 
         res.status(200).json({task})
