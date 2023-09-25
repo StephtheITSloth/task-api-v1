@@ -1,8 +1,10 @@
 const express = require('express')
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 const connectDB = require('./db/connect')
 require('dotenv').config()
+const notFound = require('./middlewares/not-found')
+const errorHandler = require('./middlewares/error-handler')
 
 //import routers
 const taskRouters = require('./routes/tasks')
@@ -11,7 +13,11 @@ app.use(express.static('./public/'))
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
+
+//routes
 app.use('/api/v1/tasks', taskRouters)
+app.use(notFound)
+app.use(errorHandler)
 
 const start = async () => {
     try {
